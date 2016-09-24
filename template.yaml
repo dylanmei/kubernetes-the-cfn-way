@@ -1,5 +1,34 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: Kubernetes Stack
+Parameters:
+  KeyName:
+    Type: "AWS::EC2::KeyPair::KeyName"
+    Description: My EC2 key pair name
+
+Mappings:
+  # https://cloud-images.ubuntu.com/locator/ec2/
+  RegionMap:
+    "ap-northeast-1":
+      ami: "ami-d82efcb9"
+    "ap-southeast-1":
+      ami: "ami-d554f1b6"
+    "ap-southeast-2":
+      ami: "ami-0bc1f168"
+    "cn-north-1":
+      ami: "ami-5c875331"
+    "eu-central-1":
+      ami: "ami-cbb844a4"
+    "eu-west-1":
+      ami: "ami-844e0bf7"
+    "sa-east-1":
+      ami: "ami-b175e6dd"
+    "us-east-1":
+      ami: "ami-e3c3b8f4"
+    "us-west-1":
+      ami: "ami-204e0040"
+    "us-west-2":
+      ami: "ami-167ba776"
+
 Resources:
   Vpc:
     Type: "AWS::EC2::VPC"
@@ -136,3 +165,71 @@ Resources:
       Path: "/"
       Roles:
         - !Ref "Role"
+
+  Etcd0:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: !FindInMap [RegionMap, !Ref "AWS::Region", "ami"]
+      KeyName: !Ref "KeyName"
+      InstanceType: "t2.small"
+      NetworkInterfaces:
+        - DeviceIndex: 0
+          PrivateIpAddress: "10.240.0.10"
+          AssociatePublicIpAddress: True
+          SubnetId: !Ref "Subnet"
+          GroupSet:
+            - !Ref "SecurityGroup"
+          DeleteOnTermination: True
+      Tags:
+        - Key: Name
+          Value: etcd0
+
+  Etcd1:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: !FindInMap [RegionMap, !Ref "AWS::Region", "ami"]
+      KeyName: !Ref "KeyName"
+      InstanceType: "t2.small"
+      NetworkInterfaces:
+        - DeviceIndex: 0
+          PrivateIpAddress: "10.240.0.11"
+          AssociatePublicIpAddress: True
+          SubnetId: !Ref "Subnet"
+          GroupSet:
+            - !Ref "SecurityGroup"
+          DeleteOnTermination: True
+      Tags:
+        - Key: Name
+          Value: etcd1
+
+  Etcd2:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: !FindInMap [RegionMap, !Ref "AWS::Region", "ami"]
+      KeyName: !Ref "KeyName"
+      InstanceType: "t2.small"
+      NetworkInterfaces:
+        - DeviceIndex: 0
+          PrivateIpAddress: "10.240.0.12"
+          AssociatePublicIpAddress: True
+          SubnetId: !Ref "Subnet"
+          GroupSet:
+            - !Ref "SecurityGroup"
+          DeleteOnTermination: True
+      Tags:
+        - Key: Name
+          Value: etcd2
+
+Outputs:
+  Etcd0:
+    Description: Instance ID of Ectd0
+    Value: !Ref "Etcd0"
+
+  Etcd1:
+    Description: Instance ID of Ectd1
+    Value: !Ref "Etcd1"
+
+  Etcd2:
+    Description: Instance ID of Ectd2
+    Value: !Ref "Etcd2"
+
