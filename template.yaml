@@ -90,3 +90,49 @@ Resources:
       Tags:
         - Key: Name
           Value: kubernetes
+
+
+  LoadBalancer:
+    Type: "AWS::ElasticLoadBalancing::LoadBalancer"
+    Properties:
+      LoadBalancerName: "kubernetes"
+      Subnets:
+        - !Ref "Subnet"
+      SecurityGroups:
+        - !Ref "SecurityGroup"
+      Listeners:
+        - Protocol: TCP
+          LoadBalancerPort: 6443
+          InstanceProtocol: TCP
+          InstancePort: 6443
+
+  Role:
+    Type: "AWS::IAM::Role"
+    Properties:
+      RoleName: kubernetes
+      AssumeRolePolicyDocument: |
+        {
+          "Version": "2012-10-17",
+          "Statement": [
+            {"Effect": "Allow", "Principal": { "Service": "ec2.amazonaws.com"}, "Action": "sts:AssumeRole"}
+          ]
+        }
+      Policies:
+        - PolicyName: kubernetes
+          PolicyDocument: |
+            {
+              "Version": "2012-10-17",
+              "Statement": [
+                {"Effect": "Allow", "Action": ["ec2:*"], "Resource": ["*"]},
+                {"Effect": "Allow", "Action": ["elasticloadbalancing:*"], "Resource": ["*"]},
+                {"Effect": "Allow", "Action": ["route53:*"], "Resource": ["*"]},
+                {"Effect": "Allow", "Action": ["ecr:*"], "Resource": ["*"]}
+              ]
+            }
+
+  InstanceProfile:
+    Type: "AWS::IAM::InstanceProfile"
+    Properties:
+      Path: "/"
+      Roles:
+        - !Ref "Role"
