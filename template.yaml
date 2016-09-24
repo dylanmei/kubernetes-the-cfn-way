@@ -220,6 +220,126 @@ Resources:
         - Key: Name
           Value: etcd2
 
+  Controller0:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: !FindInMap [RegionMap, !Ref "AWS::Region", "ami"]
+      KeyName: !Ref "KeyName"
+      InstanceType: "t2.small"
+      IamInstanceProfile: !Ref "InstanceProfile"
+      SourceDestCheck: False
+      NetworkInterfaces:
+        - DeviceIndex: 0
+          PrivateIpAddress: "10.240.0.20"
+          AssociatePublicIpAddress: True
+          SubnetId: !Ref "Subnet"
+          GroupSet:
+            - !Ref "SecurityGroup"
+          DeleteOnTermination: True
+      Tags:
+        - Key: Name
+          Value: controller0
+
+  Controller1:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: !FindInMap [RegionMap, !Ref "AWS::Region", "ami"]
+      KeyName: !Ref "KeyName"
+      InstanceType: "t2.small"
+      IamInstanceProfile: !Ref "InstanceProfile"
+      SourceDestCheck: False
+      NetworkInterfaces:
+        - DeviceIndex: 0
+          PrivateIpAddress: "10.240.0.21"
+          AssociatePublicIpAddress: True
+          SubnetId: !Ref "Subnet"
+          GroupSet:
+            - !Ref "SecurityGroup"
+          DeleteOnTermination: True
+      Tags:
+        - Key: Name
+          Value: controller1
+
+  Controller2:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: !FindInMap [RegionMap, !Ref "AWS::Region", "ami"]
+      KeyName: !Ref "KeyName"
+      InstanceType: "t2.small"
+      IamInstanceProfile: !Ref "InstanceProfile"
+      SourceDestCheck: False
+      NetworkInterfaces:
+        - DeviceIndex: 0
+          PrivateIpAddress: "10.240.0.22"
+          AssociatePublicIpAddress: True
+          SubnetId: !Ref "Subnet"
+          GroupSet:
+            - !Ref "SecurityGroup"
+          DeleteOnTermination: True
+      Tags:
+        - Key: Name
+          Value: controller2
+
+  Worker0:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: !FindInMap [RegionMap, !Ref "AWS::Region", "ami"]
+      KeyName: !Ref "KeyName"
+      InstanceType: "t2.small"
+      IamInstanceProfile: !Ref "InstanceProfile"
+      SourceDestCheck: False
+      NetworkInterfaces:
+        - DeviceIndex: 0
+          PrivateIpAddress: "10.240.0.30"
+          AssociatePublicIpAddress: True
+          SubnetId: !Ref "Subnet"
+          GroupSet:
+            - !Ref "SecurityGroup"
+          DeleteOnTermination: True
+      Tags:
+        - Key: Name
+          Value: worker0
+
+  Worker1:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: !FindInMap [RegionMap, !Ref "AWS::Region", "ami"]
+      KeyName: !Ref "KeyName"
+      InstanceType: "t2.small"
+      IamInstanceProfile: !Ref "InstanceProfile"
+      SourceDestCheck: False
+      NetworkInterfaces:
+        - DeviceIndex: 0
+          PrivateIpAddress: "10.240.0.31"
+          AssociatePublicIpAddress: True
+          SubnetId: !Ref "Subnet"
+          GroupSet:
+            - !Ref "SecurityGroup"
+          DeleteOnTermination: True
+      Tags:
+        - Key: Name
+          Value: worker1
+
+  Worker2:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: !FindInMap [RegionMap, !Ref "AWS::Region", "ami"]
+      KeyName: !Ref "KeyName"
+      InstanceType: "t2.small"
+      IamInstanceProfile: !Ref "InstanceProfile"
+      SourceDestCheck: False
+      NetworkInterfaces:
+        - DeviceIndex: 0
+          PrivateIpAddress: "10.240.0.32"
+          AssociatePublicIpAddress: True
+          SubnetId: !Ref "Subnet"
+          GroupSet:
+            - !Ref "SecurityGroup"
+          DeleteOnTermination: True
+      Tags:
+        - Key: Name
+          Value: worker2
+
 Outputs:
   Etcd0:
     Description: Instance ID of Ectd0
@@ -233,3 +353,26 @@ Outputs:
     Description: Instance ID of Ectd2
     Value: !Ref "Etcd2"
 
+  Controller0:
+    Description: Instance ID of Kubernetes Controller0
+    Value: !Ref "Controller0"
+
+  Controller1:
+    Description: Instance ID of Kubernetes Controller1
+    Value: !Ref "Controller1"
+
+  Controller2:
+    Description: Instance ID of Kubernetes Controller2
+    Value: !Ref "Controller2"
+
+  Worker0:
+    Description: Instance ID of Kubernetes Worker0
+    Value: !Ref "Worker0"
+
+  Worker1:
+    Description: Instance ID of Kubernetes Worker1
+    Value: !Ref "Worker1"
+
+  Worker2:
+    Description: Instance ID of Kubernetes Worker2
+    Value: !Ref "Worker2"
