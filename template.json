@@ -78,6 +78,32 @@
         "DestinationCidrBlock": "0.0.0.0/0",
         "GatewayId": { "Ref": "InternetGateway" }
       }
+    },
+    "SecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "Kubernetes security group",
+        "SecurityGroupIngress": [{
+          "IpProtocol": "-1",
+          "FromPort": "0",
+          "ToPort": "65535",
+          "CidrIp": "10.240.0.0/16"
+        }, {
+          "IpProtocol": "tcp",
+          "FromPort": "22",
+          "ToPort": "22",
+          "CidrIp": "0.0.0.0/0"
+        }, {
+          "IpProtocol": "tcp",
+          "FromPort": "6443",
+          "ToPort": "6443",
+          "CidrIp": "0.0.0.0/0"
+        }],
+        "VpcId": { "Ref": "Vpc" },
+        "Tags": [
+          { "Key": "Name", "Value": "kubernetes" }
+        ]
+      }
     }
   }
 }
