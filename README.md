@@ -48,6 +48,6 @@ Print outputs
 A long-winded way of getting all of the public ip addresses:
 
 ```
-% aws cloudformation describe-stacks --stack-name "kubernetes" --query 'Stacks[].Outputs[].[OutputKey, OutputValue]' --output text | awk '{print $2}' | xargs aws ec2 describe-instances --instance-ids --query 'Reservations[].Instances[].[InstanceId, PublicIpAddress]' --output text | awk '{print $2}'
+% aws cloudformation describe-stacks --stack-name "kubernetes" --query 'Stacks[].Outputs[].[Description, OutputValue]' --output text | grep "Instance ID" | awk '{print $NF}' | aws ec2 describe-instances --instance-ids --query 'Reservations[].Instances[].[InstanceId, PublicIpAddress]' --output text | awk '{print $2}'
 
 ```

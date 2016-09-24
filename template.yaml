@@ -376,3 +376,7 @@ Outputs:
   Worker2:
     Description: Instance ID of Kubernetes Worker2
     Value: !Ref "Worker2"
+
+  PublicAddress:
+    Description: Public address of the load balancer
+    Value: !GetAtt ["LoadBalancer", "DNSName"]
