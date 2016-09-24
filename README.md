@@ -1,7 +1,9 @@
 kubernetes-the-cfn-way
 ----------------------
 
-An AWS CloudFormation template Based on my walkthrough of Kelsey Hightower's [kubernetes-the-hard-way](https://github.com/kelseyhightower/kubernetes-the-hard-way). *Using this is cheating* ;)
+An AWS CloudFormation template based on a walkthrough of Kelsey Hightower's [kubernetes-the-hard-way](https://github.com/kelseyhightower/kubernetes-the-hard-way).
+
+*Using this is cheating!* But it does get you through some of the boring bits.
 
 ## common commands
 
