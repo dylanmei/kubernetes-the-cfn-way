@@ -1,0 +1,7 @@
+ca.csr
+ca-key.pem
+ca.pem
+kubernetes-csr.json
+kubernetes.csr
+kubernetes.pem
+kubernetes-key.pem
