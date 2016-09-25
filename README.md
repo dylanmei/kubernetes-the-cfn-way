@@ -45,9 +45,9 @@ Print outputs
 
 ```
 
-A long-winded way of getting all of the public ip addresses:
+A long-winded way of printing EC2 details, such as the public ip addresses:
 
 ```
-% aws cloudformation describe-stacks --stack-name "kubernetes" --query 'Stacks[].Outputs[].[Description, OutputValue]' --output text | grep "Instance ID" | awk '{print $NF}' | aws ec2 describe-instances --instance-ids --query 'Reservations[].Instances[].[InstanceId, PublicIpAddress]' --output text | awk '{print $2}'
+% aws ec2 describe-instances --filters Name=tag-value,Values=$(aws cloudformation describe-stacks --stack-name "kubernetes" --query 'Stacks[0].StackId' --output text) --query 'Reservations[].Instances[].[Tags[?Key==`Name`] | [0].Value, InstanceId, PublicIpAddress]' --output table
 
 ```
