@@ -45,9 +45,24 @@ Print outputs
 
 ```
 
-A long-winded way of printing EC2 details, such as the public ip addresses:
+A long-winded way of printing EC2 details, such as the public ip addresses
 
 ```
 % aws ec2 describe-instances --filters Name=tag-value,Values=$(aws cloudformation describe-stacks --stack-name "kubernetes" --query 'Stacks[0].StackId' --output text) --query 'Reservations[].Instances[].[Tags[?Key==`Name`] | [0].Value, InstanceId, PublicIpAddress]' --output table
+
+```
+
+Dashboard add-on
+
+```
+% kubectl create -f https://rawgit.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml
+% kubectl proxy
+
+```
+
+Clean up
+
+```
+% aws cloudformation delete-stack --stack-name "kubernetes"
 
 ```
