@@ -340,6 +340,29 @@ Resources:
         - Key: Name
           Value: worker2
 
+
+  PodRoute0:
+    Type: "AWS::EC2::Route"
+    Properties:
+      RouteTableId: !Ref "RouteTable"
+      DestinationCidrBlock: "10.200.0.0/24"
+      InstanceId: !Ref "Worker0"
+
+
+  PodRoute1:
+    Type: "AWS::EC2::Route"
+    Properties:
+      RouteTableId: !Ref "RouteTable"
+      DestinationCidrBlock: "10.200.1.0/24"
+      InstanceId: !Ref "Worker1"
+
+  PodRoute2:
+    Type: "AWS::EC2::Route"
+    Properties:
+      RouteTableId: !Ref "RouteTable"
+      DestinationCidrBlock: "10.200.2.0/24"
+      InstanceId: !Ref "Worker2"
+
 Outputs:
   Etcd0:
     Description: Instance ID of Ectd0
