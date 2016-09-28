@@ -166,60 +166,6 @@ Resources:
       Roles:
         - !Ref "Role"
 
-  Etcd0:
-    Type: "AWS::EC2::Instance"
-    Properties:
-      ImageId: !FindInMap [RegionMap, !Ref "AWS::Region", "ami"]
-      KeyName: !Ref "KeyName"
-      InstanceType: "t2.small"
-      NetworkInterfaces:
-        - DeviceIndex: 0
-          PrivateIpAddress: "10.240.0.10"
-          AssociatePublicIpAddress: True
-          SubnetId: !Ref "Subnet"
-          GroupSet:
-            - !Ref "SecurityGroup"
-          DeleteOnTermination: True
-      Tags:
-        - Key: Name
-          Value: etcd0
-
-  Etcd1:
-    Type: "AWS::EC2::Instance"
-    Properties:
-      ImageId: !FindInMap [RegionMap, !Ref "AWS::Region", "ami"]
-      KeyName: !Ref "KeyName"
-      InstanceType: "t2.small"
-      NetworkInterfaces:
-        - DeviceIndex: 0
-          PrivateIpAddress: "10.240.0.11"
-          AssociatePublicIpAddress: True
-          SubnetId: !Ref "Subnet"
-          GroupSet:
-            - !Ref "SecurityGroup"
-          DeleteOnTermination: True
-      Tags:
-        - Key: Name
-          Value: etcd1
-
-  Etcd2:
-    Type: "AWS::EC2::Instance"
-    Properties:
-      ImageId: !FindInMap [RegionMap, !Ref "AWS::Region", "ami"]
-      KeyName: !Ref "KeyName"
-      InstanceType: "t2.small"
-      NetworkInterfaces:
-        - DeviceIndex: 0
-          PrivateIpAddress: "10.240.0.12"
-          AssociatePublicIpAddress: True
-          SubnetId: !Ref "Subnet"
-          GroupSet:
-            - !Ref "SecurityGroup"
-          DeleteOnTermination: True
-      Tags:
-        - Key: Name
-          Value: etcd2
-
   Controller0:
     Type: "AWS::EC2::Instance"
     Properties:
@@ -230,7 +176,7 @@ Resources:
       SourceDestCheck: False
       NetworkInterfaces:
         - DeviceIndex: 0
-          PrivateIpAddress: "10.240.0.20"
+          PrivateIpAddress: "10.240.0.10"
           AssociatePublicIpAddress: True
           SubnetId: !Ref "Subnet"
           GroupSet:
@@ -250,7 +196,7 @@ Resources:
       SourceDestCheck: False
       NetworkInterfaces:
         - DeviceIndex: 0
-          PrivateIpAddress: "10.240.0.21"
+          PrivateIpAddress: "10.240.0.11"
           AssociatePublicIpAddress: True
           SubnetId: !Ref "Subnet"
           GroupSet:
@@ -270,7 +216,7 @@ Resources:
       SourceDestCheck: False
       NetworkInterfaces:
         - DeviceIndex: 0
-          PrivateIpAddress: "10.240.0.22"
+          PrivateIpAddress: "10.240.0.12"
           AssociatePublicIpAddress: True
           SubnetId: !Ref "Subnet"
           GroupSet:
@@ -290,7 +236,7 @@ Resources:
       SourceDestCheck: False
       NetworkInterfaces:
         - DeviceIndex: 0
-          PrivateIpAddress: "10.240.0.30"
+          PrivateIpAddress: "10.240.0.20"
           AssociatePublicIpAddress: True
           SubnetId: !Ref "Subnet"
           GroupSet:
@@ -310,7 +256,7 @@ Resources:
       SourceDestCheck: False
       NetworkInterfaces:
         - DeviceIndex: 0
-          PrivateIpAddress: "10.240.0.31"
+          PrivateIpAddress: "10.240.0.21"
           AssociatePublicIpAddress: True
           SubnetId: !Ref "Subnet"
           GroupSet:
@@ -330,7 +276,7 @@ Resources:
       SourceDestCheck: False
       NetworkInterfaces:
         - DeviceIndex: 0
-          PrivateIpAddress: "10.240.0.32"
+          PrivateIpAddress: "10.240.0.22"
           AssociatePublicIpAddress: True
           SubnetId: !Ref "Subnet"
           GroupSet:
@@ -364,18 +310,6 @@ Resources:
       InstanceId: !Ref "Worker2"
 
 Outputs:
-  Etcd0:
-    Description: Instance ID of Ectd0
-    Value: !Ref "Etcd0"
-
-  Etcd1:
-    Description: Instance ID of Ectd1
-    Value: !Ref "Etcd1"
-
-  Etcd2:
-    Description: Instance ID of Ectd2
-    Value: !Ref "Etcd2"
-
   Controller0:
     Description: Instance ID of Kubernetes Controller0
     Value: !Ref "Controller0"
